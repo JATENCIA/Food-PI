@@ -5,8 +5,8 @@ const { API_FOOD, API_FOOD_MOCKY } = require("../utils/utils.js");
 const getInfoRecipe = async () => {
   try {
     infoApi = await axios.get(
-      // API_FOOD
-      API_FOOD_MOCKY
+      API_FOOD
+      // API_FOOD_MOCKY
     );
     const data = infoApi.data.results;
     const infoRecipe = data?.map((recipe) => {

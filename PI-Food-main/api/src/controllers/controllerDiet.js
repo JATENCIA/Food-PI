@@ -5,8 +5,8 @@ const { API_FOOD, API_FOOD_MOCKY } = require("../utils/utils.js");
 const getAllDiets = async () => {
   try {
     const allRecipes = await axios.get(
-      // API_FOOD
-      API_FOOD_MOCKY
+      API_FOOD
+      // API_FOOD_MOCKY
     );
     const dietsArrays = allRecipes.data.results?.map((recipe) => recipe.diets);
     const dietsEach = dietsArrays.flat();
