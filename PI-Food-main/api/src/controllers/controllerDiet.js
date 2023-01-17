@@ -19,7 +19,8 @@ const getAllDiets = async () => {
         },
       });
     });
-    return diets;
+
+    return diets.join("\n");
   } catch (error) {
     console.log(error);
     return error;

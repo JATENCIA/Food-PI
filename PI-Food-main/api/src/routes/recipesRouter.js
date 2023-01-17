@@ -7,13 +7,11 @@ router.get("/", async (req, res) => {
   try {
     const { name } = req.query;
     let info = await getAllRecipes();
+
     if (name) {
-      let recipeName = "";
-      info.forEach((element) => {
-        if (element.name.toLowerCase() === name.toLowerCase()) {
-          return (recipeName = element);
-        }
-      });
+      let recipeName = info.filter((r) =>
+        r.name.toLowerCase().includes(name.toLowerCase())
+      );
       recipeName
         ? res.status(200).send(recipeName)
         : res.status(404).send("Recipe Not Found");
@@ -21,14 +19,14 @@ router.get("/", async (req, res) => {
       res.status(200).send(info);
     }
   } catch (error) {
-    res.status(404).send(`Error: ${error}`);
+    console.log("Error in route getQueryname", error);
   }
 });
 
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const infoApi = getAllRecipes();
+    const infoApi = await getAllRecipes();
     if (id) {
       const recipeById = infoApi.find((recipe) => recipe.id == id);
       recipeById
