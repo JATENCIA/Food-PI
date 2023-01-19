@@ -12,10 +12,7 @@ import {
   UPDATE_RECIPE,
   SET_PAGE,
   CLEAN_RECIPES,
-  CREATE_RECIPE,
 } from "./constActios.jsx";
-
-// const urlInfoBack = "http://localhost:3001";
 
 export function loading() {
   return {
@@ -23,17 +20,32 @@ export function loading() {
   };
 }
 
+// export function getRecipes() {
+//   return async (dispatch) => {
+//     try {
+//       const allRecipes = await axios.get("/recipes");
+//       return dispatch({
+//         type: GET_RECIPES,
+//         payload: allRecipes.data,
+//       });
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+// }
 export function getRecipes() {
-  return async (dispatch) => {
-    try {
-      const allRecipes = await axios.get("/recipes");
-      return dispatch({
-        type: GET_RECIPES,
-        payload: allRecipes.data,
+  return (dispatch) => {
+    axios
+      .get("/recipes")
+      .then((recipes) => {
+        dispatch({
+          type: GET_RECIPES,
+          payload: recipes.data,
+        });
+      })
+      .catch((error) => {
+        return error;
       });
-    } catch (error) {
-      console.log(error);
-    }
   };
 }
 
@@ -54,21 +66,36 @@ export function updateRecipe(id, payload) {
 }
 
 //SEARCH BAR
-export function getRecipeByName(name) {
-  return async (dispatch) => {
-    try {
-      const recipeName = await axios.get(`/recipes?name=${name}`);
+// export function getRecipeByName(name) {
+//   return async (dispatch) => {
+//     try {
+//       const recipeName = await axios.get(`/recipes?name=${name}`);
 
-      return dispatch({
-        type: GET_RECIPE_BY_NAME,
-        payload: recipeName.data,
+//       return dispatch({
+//         type: GET_RECIPE_BY_NAME,
+//         payload: recipeName.data,
+//       });
+//     } catch (error) {
+//       return dispatch({
+//         type: GET_RECIPE_BY_NAME,
+//         payload: [],
+//       });
+//     }
+//   };
+// }
+export function getRecipeByName(name) {
+  return (dispatch) => {
+    axios
+      .get(`/recipes?name=${name}`)
+      .then((recipe) => {
+        dispatch({
+          type: GET_RECIPE_BY_NAME,
+          payload: recipe.data,
+        });
+      })
+      .catch((error) => {
+        return error;
       });
-    } catch (error) {
-      return dispatch({
-        type: GET_RECIPE_BY_NAME,
-        payload: [],
-      });
-    }
   };
 }
 

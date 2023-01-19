@@ -24,7 +24,7 @@ export function CreateRecipe() {
     summary: "",
     healthScore: "1",
     steps: [],
-    image: "https://cutt.ly/VZcVXeE",
+    image: "https://webknox.com/recipeImages/1747683-556x370.jpg",
     diets: [],
   });
 
@@ -78,11 +78,14 @@ export function CreateRecipe() {
     });
   };
 
-  // let validateUrl = /(http(s?):)([/|.|\w|\s|-])*.(?:jpg|gif|png)/;
+  let validateUrl = /(http(s?):)([/|.|\w|\s|-])*.(?:jpg|gif|png)/;
 
   function validate(input) {
     let errors = {};
-    console.log(typeof input.name);
+    if (!/^([a-zA-ZñÑáéíóúÁÉÍÓÚ ])+$/i.test(input.name)) {
+      errors.name = "Ingresa un nombre correcto";
+    }
+
     if (!input.name.trim()) {
       errors.name = "Ingresa un nombre correcto";
     } else if (
@@ -92,20 +95,19 @@ export function CreateRecipe() {
       )
     ) {
       errors.name = `La receta ${input.name} ya existe`;
-    } else if (input.summary.length < 0 || input.summary.trim() === "") {
+    } else if (!input.summary.length || input.summary.trim() === "") {
       errors.summary = "Ingresa un correcto summary";
     } else if (
       input.healthScore === "" ||
       input.healthScore < 1 ||
       input.healthScore > 100
     ) {
-      errors.healthScore = "Ingresa healthScore";
-    } else if (input.steps.length === 0) {
+      errors.healthScore = "healthScore entre 1 y 100";
+    } else if (!input.steps.length) {
       errors.steps = "Ingresa los pasos correctos";
-      // } else if (!input.image || !validateUrl.test(input.image)) {
-    } else if (!input.image) {
+    } else if (!input.image || !validateUrl.test(input.image)) {
       errors.image = "No es un URL valido";
-    } else if (input.diets.length === 0) {
+    } else if (input.diets.length < 1) {
       errors.diets = "Selecciona una o más dietas";
     }
     return errors;
@@ -144,7 +146,7 @@ export function CreateRecipe() {
             <h1 id={styles.h1}>Crea tu receta!</h1>
           </div>
           <div>
-            <label id={styles.label}>Nombre: </label>
+            <label id={styles.label}>Name: </label>
             <input
               id={styles.input}
               type="text"
@@ -179,7 +181,7 @@ export function CreateRecipe() {
             )}
           </div>
           <div>
-            <label id={styles.label}>Pasos: </label>
+            <label id={styles.label}>Steps: </label>
             <textarea
               id={styles.input}
               type="text"
@@ -190,7 +192,7 @@ export function CreateRecipe() {
             {errors.steps && <h4 id={styles.error}>{errors.steps}</h4>}
           </div>
           <div>
-            <label id={styles.label}>Imagen: </label>
+            <label id={styles.label}>Image: </label>
             <input
               id={styles.input}
               type="text"
@@ -201,15 +203,13 @@ export function CreateRecipe() {
             {errors.image && <h4 id={styles.error}>{errors.image}</h4>}
           </div>
           <div>
-            <label id={styles.label}>Dietas: </label>
+            <label id={styles.label}>Diets: </label>
             <select
               id={styles.selectForm}
               name="selectDiet"
               onChange={(e) => handleSelect(e)}
             >
-              {/* {diets && diets.map((diet) => (
-                        <option value={diet.name}>{diet.name}</option>
-                    ))} */}
+              <option value=""></option>
               <option value="gluten free">Gluten Free</option>
               <option value="ketogenic">Ketogenic</option>
               <option value="lacto-vegetarian">Lacto-Vegetarian </option>
@@ -220,33 +220,8 @@ export function CreateRecipe() {
               <option value="primal">Primal</option>
               <option value="whole 30">Whole 30</option>
             </select>
-            {/* <select
-              id={styles.selectForm}
-              onChange={(e) => handleSelect(e)}
-              defaultValue="default"
-            >
-              <option disabled value="default">
-                {" "}
-                Selecciona diet...
-              </option>
-              {dietsTypes?.map((d) => (
-                <option value={d.name} key={d.id}>
-                  {d.name}
-                </option>
-              ))}
-            </select> */}
 
             <div id={styles.divDiet}>
-              {/* {input.diets.map((d) => (
-                <div key={d}>
-                  <div>
-                    <h4 id={styles.selectDiet}>{d}</h4>
-                  </div>
-                  <button id={styles.buttonDiet} value={d}>
-                    x
-                  </button>
-                </div>
-              ))} */}
               {input.diets.map((diet) => (
                 <div>
                   <p className="addChoseDiet">{diet}</p>

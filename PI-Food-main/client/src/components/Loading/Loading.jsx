@@ -6,7 +6,7 @@ export function Loading() {
     <div id={styles.loading}>
       <img
         id={styles.imageLoading}
-        src="https://i.pinimg.com/originals/ee/1d/08/ee1d081c5bdf966b058c1a6588e73e8a.gif"
+        src="https://cdn.dribbble.com/users/496146/screenshots/2331441/v1_animation_pizza.gif"
         alt="loading"
       />
     </div>
