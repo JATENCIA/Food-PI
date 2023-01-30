@@ -15,7 +15,7 @@ export function CreateRecipe() {
   const dispatch = useDispatch();
   const history = useHistory();
   let allRecipes = useSelector((state) => state.allRecipes);
-  // const dietsTypes = useSelector((state) => state.diets);
+  const dietsTypes = useSelector((state) => state.diets);
 
   const [errors, setErrors] = useState({});
 
@@ -26,6 +26,7 @@ export function CreateRecipe() {
     steps: [],
     image: "https://webknox.com/recipeImages/1747683-556x370.jpg",
     diets: [],
+    dishTypes: [],
   });
 
   useEffect(() => {
@@ -109,6 +110,11 @@ export function CreateRecipe() {
       errors.image = "No es un URL valido";
     } else if (input.diets.length < 1) {
       errors.diets = "Selecciona una o más dietas";
+    } else if (
+      !input.dishTypes.length ||
+      !/^([a-zA-ZñÑáéíóúÁÉÍÓÚ ])+$/i.test(input.dishTypes)
+    ) {
+      errors.dishTypes = "Ingrese un dishTypes correcto";
     }
     return errors;
   }
@@ -129,6 +135,7 @@ export function CreateRecipe() {
         steps: [],
         image: "",
         diets: [],
+        dishTypes: [],
       });
       history.push("/home");
       dispatch(cleanRecipes());
@@ -203,28 +210,40 @@ export function CreateRecipe() {
             {errors.image && <h4 id={styles.error}>{errors.image}</h4>}
           </div>
           <div>
+            <label id={styles.label}>DishTypes: </label>
+            <textarea
+              id={styles.input}
+              type="text"
+              value={input.dishTypes}
+              name="dishTypes"
+              onChange={(e) => handleChange(e)}
+            ></textarea>
+            {errors.dishTypes && <h4 id={styles.error}>{errors.dishTypes}</h4>}
+          </div>
+          <div>
             <label id={styles.label}>Diets: </label>
+
             <select
               id={styles.selectForm}
-              name="selectDiet"
               onChange={(e) => handleSelect(e)}
+              defaultValue="default"
             >
-              <option value=""></option>
-              <option value="gluten free">Gluten Free</option>
-              <option value="ketogenic">Ketogenic</option>
-              <option value="lacto-vegetarian">Lacto-Vegetarian </option>
-              <option value="lacto ovo vegetarian">Ovo-Vegetarian</option>
-              <option value="vegan">Vegan</option>
-              <option value="pescatarian">Pescatarian</option>
-              <option value="paleolithic">Paleolithic</option>
-              <option value="primal">Primal</option>
-              <option value="whole 30">Whole 30</option>
+              <option disabled value="default">
+                ALL RECIPES
+              </option>
+              {dietsTypes?.map((name) => (
+                <option value={name} key={name}>
+                  {name}
+                </option>
+              ))}
             </select>
 
             <div id={styles.divDiet}>
               {input.diets.map((diet) => (
                 <div>
-                  <p className="addChoseDiet">{diet}</p>
+                  <p className="addChoseDiet" id={styles.dietS}>
+                    {diet}
+                  </p>
                   <button
                     className="buttonDelete"
                     onClick={() => handleDelete(diet)}

@@ -29,7 +29,7 @@ export function SearchBar() {
       />
       <button
         id={styles.buttonSearch}
-        type="submit"
+        type="button"
         onClick={(event) => handleSubmit(event)}
       >
         <img

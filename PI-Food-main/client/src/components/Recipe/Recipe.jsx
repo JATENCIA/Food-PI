@@ -2,7 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from "../Recipe/Recipe.module.css";
 
-export function Recipe({ id, image, name, healthScore, diets, created }) {
+export function Recipe({
+  id,
+  image,
+  name,
+  healthScore,
+  diets,
+  created,
+  dishTypes,
+}) {
   return (
     <div>
       {created ? (
@@ -42,18 +50,29 @@ export function Recipe({ id, image, name, healthScore, diets, created }) {
               <label>
                 Health Score: <span>{healthScore}</span>
               </label>
+
               <img
                 src="https://www.pngall.com/wp-content/uploads/11/Healthy-Care-Vector-PNG-Photo.png"
                 alt="healthscore"
                 width="20px"
               />
             </div>
+
             <label id={styles.label2}>Diets: </label>
             {diets?.map((d) => (
               <p id={styles.p} key={d}>
                 {d.charAt(0).toUpperCase() + d.slice(1)}
               </p>
             ))}
+
+            <div>
+              <label id={styles.label2}>DishTypes: </label>
+              {dishTypes?.map((d) => (
+                <p id={styles.p} key={d}>
+                  {d.charAt(0).toUpperCase() + d.slice(1)}
+                </p>
+              ))}
+            </div>
           </div>
         </Link>
       )}

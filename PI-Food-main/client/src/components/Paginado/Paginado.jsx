@@ -13,6 +13,7 @@ export function Paginado() {
   const allRecipes = recipes?.length;
 
   const handlePaginado = (event) => {
+    event.preventDefault();
     dispatch(setPage(parseInt(event.target.innerHTML)));
   };
 

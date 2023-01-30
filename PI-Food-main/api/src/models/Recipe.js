@@ -32,6 +32,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      dishTypes: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       created: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

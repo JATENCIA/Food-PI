@@ -66,6 +66,12 @@ export function RecipeDetail(props) {
                 );
               })}
             </h4>
+            <div>
+              <h4>
+                <div id={styles.spanh4}>DishTypes </div>
+                {recipeDetail?.dishTypes}
+              </h4>
+            </div>
           </div>
         )}
       </div>
