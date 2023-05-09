@@ -26,9 +26,6 @@ server.use((req, res, next) => {
 });
 
 server.use("/", routes);
-server.get("/", (req, res) => {
-  res.status(200).json("WELCOME TO PI_FOOD");
-});
 
 // Error catching endware.
 server.use((err, req, res, next) => {
