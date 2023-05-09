@@ -4,10 +4,36 @@ const fs = require("fs");
 const path = require("path");
 const { DB_URI } = process.env;
 
-const sequelize = new Sequelize(`${DB_URI}`, {
-  logging: false, // set to console.log to see the raw SQL queries
-  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-});
+// const sequelize = new Sequelize(`${DB_URI}`, {
+//   logging: false, // set to console.log to see the raw SQL queries
+//   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+// });
+
+let sequelize =
+  process.env.NODE_ENV === "production"
+    ? new Sequelize({
+        database: `${DB_URI}`,
+
+        pool: {
+          max: 3,
+          min: 1,
+          idle: 10000,
+        },
+        dialectOptions: {
+          ssl: {
+            require: true,
+
+            rejectUnauthorized: false,
+          },
+          keepAlive: true,
+        },
+        ssl: true,
+      })
+    : new Sequelize(`${DB_URI}`, {
+        logging: false,
+        native: false,
+      });
+
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
