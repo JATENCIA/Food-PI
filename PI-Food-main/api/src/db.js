@@ -12,8 +12,7 @@ const { DB_URI } = process.env;
 let sequelize =
   process.env.NODE_ENV === "production"
     ? new Sequelize({
-        database: `${DB_URI}`,
-
+        DATABASE_URL: `${DB_URI}`,
         pool: {
           max: 3,
           min: 1,
