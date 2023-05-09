@@ -12,7 +12,12 @@ const { DB_URI } = process.env;
 let sequelize =
   process.env.NODE_ENV === "production"
     ? new Sequelize({
-        DATABASE_URL: `${DB_URI}`,
+        database: DB_NAME,
+        dialect: "postgres",
+        host: DB_HOST,
+        port: DB_PORT,
+        username: DB_USER,
+        password: DB_PASSWORD,
         pool: {
           max: 3,
           min: 1,
